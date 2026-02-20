@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen;
+}
+
+.matrix-cell {
+  @apply border border-gray-300 p-2 text-center w-12 h-12 flex items-center justify-center transition-all duration-300;
+}
+
+.active-cell {
+  @apply bg-yellow-200 border-yellow-500 shadow-md;
+}
+
+.key-matrix-cell {
+  @apply border border-blue-300 p-2 text-center w-12 h-12 flex items-center justify-center transition-all duration-300;
+}
+
+/* Enhanced matrix cell styles */
+.matrix-cell-enhanced {
+  @apply border-2 border-gray-300 text-center w-12 h-12 flex items-center justify-center text-sm font-mono transition-all duration-200;
+}
+
+.matrix-cell-enhanced.active {
+  @apply bg-yellow-200 border-yellow-500 shadow-md;
+}
+
+.matrix-cell-enhanced.highlighted {
+  @apply bg-blue-200 border-blue-500;
+}
+
+.matrix-cell-enhanced.key {
+  @apply bg-purple-50 border-purple-300;
+}
+
+/* Operation-specific highlighting */
+.operation-shiftrows .row-shifted {
+  @apply bg-green-100 border-green-400;
+}
+
+.operation-mixcolumns .column-mixed {
+  @apply bg-blue-100 border-blue-400;
+}
+
+.operation-subbytes .byte-substituted {
+  @apply bg-purple-100 border-purple-400;
+}
+
+.operation-addroundkey .key-applied {
+  @apply bg-orange-100 border-orange-400;
+}
+
+/* Modern card styles */
+@layer components {
+  .modern-card {
+    @apply bg-white rounded-2xl shadow-xl border border-slate-200/50 backdrop-blur-sm;
+  }
+  
+  .modern-input {
+    @apply w-full border-2 border-slate-300 p-3 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 bg-white;
+  }
+  
+  .modern-select {
+    @apply w-full border-2 border-slate-300 p-3 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 bg-white appearance-none cursor-pointer;
+  }
+  
+  .modern-button {
+    @apply px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200;
+  }
+  
+  .modern-button-primary {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700;
+  }
+  
+  .modern-button-secondary {
+    @apply bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700;
+  }
+  
+  .modern-button-success {
+    @apply bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600;
+  }
+  
+  .modern-button-info {
+    @apply bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-600 hover:to-blue-600;
+  }
+  
+  .modern-badge {
+    @apply inline-block px-3 py-1 rounded-full text-sm font-semibold shadow-sm;
+  }
+  
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600;
+  }
+}
