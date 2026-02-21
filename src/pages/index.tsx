@@ -1250,26 +1250,26 @@ export default function Home() {
             <h3 className="font-bold mb-2">AES shifrlash jarayoni</h3>
             <p className="mb-4">
               AES shifrlash jarayoni 4 ta asosiy operatsiyadan iborat: SubBytes, ShiftRows, MixColumns va AddRoundKey.
-              Har bir round da bu operatsiyalar ketma-ket bajariladi va oxirgi round da MixColumns qo'shilmaydi.
+              Har bir raundda bu operatsiyalar ketma-ket bajariladi va oxirgi raundda MixColumns qo'shilmaydi.
             </p>
             
             <div className="bg-gray-100 p-4 rounded">
               <h4 className="font-semibold mb-2">Shifrlash bosqichlari:</h4>
               <ol className="list-decimal pl-6 mb-4">
-                <li><strong>Boshlang'ich AddRoundKey:</strong> Ochiq matnni birinchi round kalit bilan XOR qilish</li>
-                <li><strong>Asosiy roundlar (1-9):</strong>
+                <li><strong>Boshlang'ich AddRoundKey:</strong> Ochiq matnni birinchi raund kalit bilan XOR qilish</li>
+                <li><strong>Asosiy raundlar (1-9):</strong>
                   <ul className="list-disc pl-6 mt-1">
                     <li><strong>SubBytes:</strong> Har bir baytni S-box yordamida almashtirish</li>
                     <li><strong>ShiftRows:</strong> Qatorlarni chapga siljitish</li>
                     <li><strong>MixColumns:</strong> Ustunlarni Galois maydonida o'zgartirish</li>
-                    <li><strong>AddRoundKey:</strong> Round kalit bilan XOR qilish</li>
+                    <li><strong>AddRoundKey:</strong> Raund kalit bilan XOR qilish</li>
                   </ul>
                 </li>
                 <li><strong>Oxirgi round (10):</strong>
                   <ul className="list-disc pl-6 mt-1">
                     <li><strong>SubBytes:</strong> S-box almashtirish</li>
                     <li><strong>ShiftRows:</strong> Qatorlarni siljitish</li>
-                    <li><strong>AddRoundKey:</strong> Oxirgi round kalit bilan XOR qilish</li>
+                    <li><strong>AddRoundKey:</strong> Oxirgi raund kalit bilan XOR qilish</li>
                     <li><em>MixColumns qo'shilmaydi!</em></li>
                   </ul>
                 </li>
@@ -1285,17 +1285,17 @@ export default function Home() {
           <div>
             <h3 className="font-bold mb-2">AES kalit generatsiyasi jarayoni</h3>
             <p className="mb-4">
-              AES algoritmi asl kalitni olib, har bir shifrlash round uchun turli round kalitlarni yaratish uchun uni kengaytiradi.
-              AES-128 da jami 11 ta round kalit mavjud (asl kalitni ham qo'shib), ularning har biri 128 bitdan iborat.
+              AES algoritmi asl kalitni olib, har bir shifrlash raund uchun turli raund kalitlarni yaratish uchun uni kengaytiradi.
+              AES-128 da jami 11 ta raund kalit mavjud (asl kalitni ham qo'shib), ularning har biri 128 bitdan iborat.
             </p>
             
             <div className="bg-gray-100 p-4 rounded">
               <h4 className="font-semibold mb-2">Kalitni kengaytirish algoritmi:</h4>
               <ol className="list-decimal pl-6 mb-4">
-                <li>Birinchi round kalit — bu asl kalit hisoblanadi</li>
-                <li>Keyingi har bir round (1–10) uchun:
+                <li>Birinchi raund kalit — bu asl kalit hisoblanadi</li>
+                <li>Keyingi har bir raund (1–10) uchun:
                   <ul className="list-disc pl-6 mt-1">
-                    <li>Oldingi round kalit ning oxirgi 4 bayt (word) qismini oling</li>
+                    <li>Oldingi raund kalit ning oxirgi 4 bayt (word) qismini oling</li>
                     <li>Kalit jadvali yadrosini (key schedule core) qo'llang:
                       <ul className="list-circle pl-6 mt-1">
                         <li>Wordni bir bayt chapga aylantirish (RotWord)</li>
@@ -1303,15 +1303,15 @@ export default function Home() {
                         <li>Birinchi baytni Rcon bilan XOR qiling</li>
                       </ul>
                     </li>
-                    <li>Ushbu o'zgartirilgan word ni oldingi round kalitning birinchi 4 bayt qismi bilan XOR qiling</li>
-                    <li>Qolgan 12 bayt ni har bir word ni oldingi round kalitdagi mos word bilan XOR qilib hosil qiling</li>
+                    <li>Ushbu o'zgartirilgan word ni oldingi raund kalitning birinchi 4 bayt qismi bilan XOR qiling</li>
+                    <li>Qolgan 12 baytni har bir word ni oldingi raund kalitdagi mos word bilan XOR qilib hosil qiling</li>
                   </ul>
                 </li>
               </ol>
             </div>
             
             <p className="mt-4">
-              Kalitni kengaytirish har bir round da turli, ammo o'zaro bog'liq kalitlardan foydalanishni ta'minlab, turli hujumlarga qarshi barqarorlikni yaratadi.
+              Kalitni kengaytirish har bir raund da turli, ammo o'zaro bog'liq kalitlardan foydalanishni ta'minlab, turli hujumlarga qarshi barqarorlikni yaratadi.
               Bu AES ning xavfsizligi uchun juda muhimdir.
             </p>
           </div>
@@ -1377,7 +1377,7 @@ export default function Home() {
                 
                 {steps[currentStep]?.description.includes('ShiftRows') && (
                   <div className="bg-gray-100 p-3 rounded">
-                    <p>ShiftRows diffuziyani ta’minlaydi, ya’ni har bir ustundagi baytlar keyingi round davomida tarqaladi.
+                    <p>ShiftRows diffuziyani ta’minlaydi, ya’ni har bir ustundagi baytlar keyingi raund davomida tarqaladi.
                     Bu ochiq matndagi naqshlarni yo‘qotishga yordam beradi.</p>
                   </div>
                 )}

@@ -598,7 +598,7 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                 {/* Before matrix - ROWS */}
                 <div className="w-fit">
                   <div className="text-center mb-4">
-                    <h6 className="font-bold text-lg text-green-900 mb-1">Oldin (Before)</h6>
+                    <h6 className="font-bold text-lg text-green-900 mb-1">Oldin</h6>
                     <p className="text-xs text-gray-600">Qatorlar - siljitishdan oldin</p>
                   </div>
                   <div className="space-y-3 w-fit mx-auto">
@@ -941,7 +941,7 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                                             
                                             {/* Detailed calculation */}
                                             {coeff === 2 && (
-                                              <div className="bg-orange-50 p-2 rounded-lg border-2 border-orange-300 text-xs w-48">
+                                              <div className="bg-orange-50 p-2 rounded-lg border-2 border-orange-300 text-xs w-56 sm:w-64">
                                                 {(() => {
                                                   const steps = galoisMul2StepByStep(sValue);
                                                   return (
@@ -1019,7 +1019,7 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                                               </div>
                                             )}
                                             {coeff === 3 && (
-                                              <div className="bg-orange-50 p-2 rounded-lg border-2 border-orange-300 text-xs w-48">
+                                              <div className="bg-orange-50 p-2 rounded-lg border-2 border-orange-300 text-xs w-56 sm:w-64">
                                                 {(() => {
                                                   const steps = galoisMul3StepByStep(sValue);
                                                   return (
@@ -1148,7 +1148,7 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
           <div>
             <h5 className="font-bold text-xl sm:text-2xl mb-3 text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">AddRoundKey operatsiyasi:</h5>
             <p className="text-base text-slate-700 mb-4">
-              Holat round kalit bilan XOR amaliyoti orqali birlashtiriladi.
+              Holat raund kalit bilan XOR amaliyoti orqali birlashtiriladi.
             </p>
             {step.roundKey && (
               <div>
@@ -1191,7 +1191,7 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                     {/* 2: Round Key */}
                     <div className="p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border-2 border-blue-300 shadow-xl w-full max-w-[300px]">
                       <div className="text-center mb-4">
-                        <h6 className="font-extrabold text-blue-900 text-xl mb-1">Round Kalit</h6>
+                        <h6 className="font-extrabold text-blue-900 text-xl mb-1">Raund Kalit</h6>
                         <p className="text-sm text-blue-700 font-semibold">Bu bosqich uchun kalit</p>
                       </div>
                       <div className="flex justify-center">

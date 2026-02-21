@@ -55,15 +55,15 @@ body {
 /* Modern card styles */
 @layer components {
   .modern-card {
-    @apply bg-white rounded-2xl shadow-xl border border-slate-200/50 backdrop-blur-sm;
+    @apply bg-white rounded-2xl shadow-xl border border-slate-200/50 backdrop-blur-sm text-base;
   }
   
   .modern-input {
-    @apply w-full border-2 border-slate-300 p-3 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 bg-white;
+    @apply w-full border-2 border-slate-300 p-3 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 bg-white text-base;
   }
   
   .modern-select {
-    @apply w-full border-2 border-slate-300 p-3 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 bg-white appearance-none cursor-pointer;
+    @apply w-full border-2 border-slate-300 p-3 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 bg-white appearance-none cursor-pointer text-base;
   }
   
   .modern-button {
@@ -92,5 +92,18 @@ body {
   
   .gradient-text {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600;
+  }
+}
+
+@layer utilities {
+  /* Slightly increase small text sizes for better readability across the app */
+  .text-xs {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .text-sm {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 }

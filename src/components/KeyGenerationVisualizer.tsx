@@ -442,7 +442,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
             🔐 KALIT KENGAYTIRISH JARAYONI
           </h4>
           <div className="h-1 w-32 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
-          <p className="text-gray-600 mt-3 font-semibold">Round {currentStep} uchun batafsil jarayon</p>
+          <p className="text-gray-600 mt-3 font-semibold">Raund {currentStep} uchun batafsil jarayon</p>
         </div>
         
         {/* Step 1: Last Word */}
@@ -619,10 +619,10 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
               </div>
               <div className="space-y-3 mb-6">
                 <div className="p-3 bg-gradient-to-r from-red-100 to-orange-100 rounded-lg border-l-4 border-red-500">
-                  <p className="font-semibold text-gray-800"><strong className="text-red-700">RCON</strong> = Round Constant (Round konstantasi)</p>
+                  <p className="font-semibold text-gray-800"><strong className="text-red-700">RCON</strong> = Round Constant (Raund konstantasi)</p>
                 </div>
                 <div className="p-3 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-lg border-l-4 border-orange-500">
-                  <p className="font-semibold text-gray-800">Har bir round uchun alohida qiymat</p>
+                  <p className="font-semibold text-gray-800">Har bir raund uchun alohida qiymat</p>
                 </div>
                 <div className="p-3 bg-gradient-to-r from-yellow-100 to-amber-100 rounded-lg border-l-4 border-yellow-500">
                   <p className="font-semibold text-gray-800">Faqat <strong className="text-red-700">birinchi bayt</strong>ga qo'shiladi</p>
@@ -700,7 +700,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
               <div className="mb-6 p-4 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl border-2 border-orange-300">
                 <div className="text-center mb-4">
                   <div className="text-lg font-bold text-orange-700 mb-1">🔄 XOR operatsiyasi:</div>
-                  <div className="text-xs text-gray-600">Faqat birinchi bayt ga RCON qo'shiladi</div>
+                  <div className="text-xs text-gray-600">Faqat birinchi baytga RCON qo'shiladi</div>
                 </div>
                 
                 {/* Hex XOR */}
@@ -773,7 +773,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                   
                   <div className="mt-4 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
                     <div className="text-xs font-bold text-yellow-900 text-center">
-                      ⚠️ <strong>Eslatma:</strong> Faqat birinchi baytga RCON qo'shiladi, qolgan 3 ta bayt o'zgarishsiz qoladi!
+                      <strong>Eslatma:</strong> Faqat birinchi baytga RCON qo'shiladi, qolgan 3 ta bayt o'zgarishsiz qoladi!
                     </div>
                   </div>
                 </div>
@@ -794,7 +794,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                       </div>
                       <span className="text-xs text-gray-600 mt-1 font-semibold text-center">
                         Bayt {i}
-                        {i === 0 && <span className="block text-green-700 font-bold mt-1">✨ O'zgargan</span>}
+                        {i === 0 && <span className="block text-green-700 font-bold mt-1">O'zgargan</span>}
                         {i > 0 && <span className="block text-gray-500 text-xs mt-1">O'zgarmadi</span>}
                       </span>
                     </div>
@@ -1001,7 +1001,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
             <div className="mt-5 p-4 bg-gradient-to-r from-green-100 to-emerald-100 rounded-xl border-l-4 border-green-500">
               <div className="text-center">
                 <div className="text-base font-bold text-green-800">
-                  ✨ Bu 4 bayt yangi kalitning birinchi word'ini tashkil qiladi!
+                  Bu 4 bayt yangi kalitning birinchi word'ini tashkil qiladi!
                 </div>
                 <div className="text-sm text-green-700 mt-2 font-semibold">
                   Endi qolgan 3 ta word shu word asosida yaratiladi.
