@@ -86,7 +86,7 @@ export default function Home() {
     setKeyLength(newKeyLength);
     
     // Regenerate key with new length if requested
-    if (window.confirm('Do you want to generate a new key with this length?')) {
+    if (window.confirm('Shu uzunlik bilan yangi kalit yaratishni xohlaysizmi?')) {
       const newKeyBytes = generateRandomKey(newKeyLength);
       setKeyBytes(newKeyBytes);
       setKey(bytesToHex(newKeyBytes));
