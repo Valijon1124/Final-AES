@@ -238,53 +238,56 @@ export const keyExpansion = (key: number[], keyLength: KeyLength = KeyLength.AES
     normalizedKey.push(0);
   }
 
-  const keyWords = normalizedKey.length / 4;
   const numRounds = getNumRounds(keyLength);
-  
-  const roundKeys: number[][] = [normalizedKey.slice()]; // 1-raund kaliti boshlang‘ich kalitning o‘zi hisoblanadi
-  
-  for (let round = 1; round <= numRounds; round++) {
-    const prevKey = roundKeys[round - 1];
-    const newKey = prevKey.slice();
-    
-    // Oxirgi word ni aylantirib, S-box ni qo‘llang
-    const lastIndex = prevKey.length - 4;
-    const lastWord = [prevKey[lastIndex], prevKey[lastIndex + 1], prevKey[lastIndex + 2], prevKey[lastIndex + 3]];
-    const rotWord = [lastWord[1], lastWord[2], lastWord[3], lastWord[0]];
-    const subWord = rotWord.map(byte => SBOX[byte]);
-    
-    // Birinchi baytni Rcon bilan XOR qilinadi
-    subWord[0] ^= RCON[round];
-    
-    // Yangi kalitning birinchi word i generatsiya qilinadi
-    newKey[0] = prevKey[0] ^ subWord[0];
-    newKey[1] = prevKey[1] ^ subWord[1];
-    newKey[2] = prevKey[2] ^ subWord[2];
-    newKey[3] = prevKey[3] ^ subWord[3];
-    
-    // Qolgan word lar hosil qilinadi
-    for (let i = 1; i < keyWords; i++) {
-      const offset = i * 4;
-      // AES-256 holatida har to‘rtinchi word ga qo‘shimcha S-box (SubWord) qo‘llanadi
-      if (keyLength === KeyLength.AES_256 && i === 4) {
-        const tempWord = [newKey[offset - 4], newKey[offset - 3], newKey[offset - 2], newKey[offset - 1]];
-        const subTempWord = tempWord.map(byte => SBOX[byte]);
-        
-        newKey[offset] = prevKey[offset] ^ subTempWord[0];
-        newKey[offset + 1] = prevKey[offset + 1] ^ subTempWord[1];
-        newKey[offset + 2] = prevKey[offset + 2] ^ subTempWord[2];
-        newKey[offset + 3] = prevKey[offset + 3] ^ subTempWord[3];
-      } else {
-        newKey[offset] = newKey[offset - 4] ^ prevKey[offset];
-        newKey[offset + 1] = newKey[offset - 3] ^ prevKey[offset + 1];
-        newKey[offset + 2] = newKey[offset - 2] ^ prevKey[offset + 2];
-        newKey[offset + 3] = newKey[offset - 1] ^ prevKey[offset + 3];
-      }
-    }
-    
-    roundKeys.push(newKey);
+  const nk = requiredBytes / 4; // 4, 6, 8
+  const totalWords = 4 * (numRounds + 1);
+  const words: number[][] = [];
+
+  const rotateWord = (word: number[]): number[] => [word[1], word[2], word[3], word[0]];
+  const substituteWord = (word: number[]): number[] => word.map((byte) => SBOX[byte]);
+  const xorWord = (left: number[], right: number[]): number[] => [
+    left[0] ^ right[0],
+    left[1] ^ right[1],
+    left[2] ^ right[2],
+    left[3] ^ right[3],
+  ];
+
+  // Initial key words
+  for (let index = 0; index < nk; index++) {
+    const offset = index * 4;
+    words.push([
+      normalizedKey[offset],
+      normalizedKey[offset + 1],
+      normalizedKey[offset + 2],
+      normalizedKey[offset + 3],
+    ]);
   }
-  
+
+  // Full AES key schedule (FIPS-197)
+  for (let index = nk; index < totalWords; index++) {
+    let tempWord = words[index - 1].slice();
+
+    if (index % nk === 0) {
+      tempWord = substituteWord(rotateWord(tempWord));
+      tempWord[0] ^= RCON[index / nk];
+    } else if (nk > 6 && index % nk === 4) {
+      tempWord = substituteWord(tempWord);
+    }
+
+    words.push(xorWord(words[index - nk], tempWord));
+  }
+
+  // Convert to 16-byte round keys (Nr + 1 keys)
+  const roundKeys: number[][] = [];
+  for (let round = 0; round <= numRounds; round++) {
+    roundKeys.push([
+      ...words[round * 4],
+      ...words[round * 4 + 1],
+      ...words[round * 4 + 2],
+      ...words[round * 4 + 3],
+    ]);
+  }
+
   return roundKeys;
 };
 

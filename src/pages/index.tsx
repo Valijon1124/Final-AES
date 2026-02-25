@@ -5,7 +5,6 @@ import {
   generateIV,
   bytesToHex, 
   getAesSteps,
-  getKeyExpansionSteps,
   AesStep,
   AesMode,
   PaddingType,
@@ -20,7 +19,6 @@ import MatrixVisualizer from '@/components/MatrixVisualizer';
 import KeyGenerationVisualizer from '@/components/KeyGenerationVisualizer';
 import EncryptionStepVisualizer from '@/components/EncryptionStepVisualizer';
 import SBoxTable from '@/components/SBoxTable';
-import KeyScheduleDiagram from '@/components/KeyScheduleDiagram';
 
 type KeyInputFormat = 'hex' | 'text';
 
@@ -386,28 +384,19 @@ export default function Home() {
     setDecryptedText('');
     setDecryptError('');
     
-    // Always re-encrypt with current input to ensure latest data is used
-    const { steps: aesSteps, finalCiphertext: newFinalCiphertext, iv: newIv, allBlocks: newAllBlocks } = encryptWithStableIv(
-      aesMode,
-      paddingType
-    );
-    setSteps(aesSteps);
-    setFinalCiphertext(newFinalCiphertext);
-    setAllBlocks(newAllBlocks);
-    
-    // If we have multiple blocks, switch to selected block's steps
-    if (newAllBlocks && newAllBlocks.length > 1) {
-      setSteps(newAllBlocks[0].steps);
-      setSelectedBlockIndex(0);
-    } else {
-      setSelectedBlockIndex(0);
+    // Final natija paneli etalon (CryptoJS) natijasi orqali hisoblanadi.
+    let ivToUse = iv;
+    if ((aesMode === AesMode.CBC || aesMode === AesMode.CTR) && !ivToUse) {
+      ivToUse = generateIV();
+      setIv(ivToUse);
     }
-    
-    // Also generate the real ciphertext using CryptoJS for verification
-    const ivHex = newIv ? bytesToHex(newIv, '') : undefined;
+
+    const ivHex = ivToUse ? bytesToHex(ivToUse, '') : undefined;
     const keyHex = bytesToHex(keyBytes, '');
     const result = realAesEncrypt(input, keyHex, aesMode, paddingType, outputFormat, keyLength, ivHex);
     setRealCiphertext(result.formats);
+    setFinalCiphertext(result.formats);
+    setSelectedBlockIndex(0);
   };
 
   // Move to next step in the encryption process
@@ -615,7 +604,7 @@ export default function Home() {
 
   // Render the final encryption result
   const renderFinalResult = () => {
-    if (!finalCiphertext || !realCiphertext) return null;
+    if (!realCiphertext) return null;
     
     return (
       <div className="flex flex-col items-center w-full">
@@ -890,8 +879,8 @@ export default function Home() {
           <p className="text-sm text-slate-500 mt-2 flex items-center gap-2">
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs font-bold">ℹ</span>
             {keyInputFormat === 'hex' 
-              ? "Kalit 16 bayt hex formatida (32 hex raqam)."
-              : "Kalit matn sifatida kiriting va 16 bayt ga to'ldiriladi yoki qisqartiriladi."}
+              ? `Kalit ${keyLength / 8} bayt hex formatida (${keyLength / 4} hex raqam).`
+              : `Kalit matn sifatida kiriting va ${keyLength / 8} bayt ga to'ldiriladi yoki qisqartiriladi.`}
           </p>
         </div>
         
@@ -1064,7 +1053,7 @@ export default function Home() {
           >
             📊 S-box jadvali
           </button>
-          {finalCiphertext && (
+          {(realCiphertext || finalCiphertext) && (
             <button 
               onClick={handleShowFinalResult}
               className="modern-button modern-button-primary"
