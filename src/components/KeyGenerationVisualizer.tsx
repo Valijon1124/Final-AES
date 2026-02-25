@@ -129,8 +129,8 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
       // Add step for this round
       steps.push({
         stepNumber: round,
-        title: `${round} - round  kaliti`,
-        description: `${round}-round uchun kalitni kengaytirish jarayoni`,
+        title: `${round} - raund  kaliti`,
+        description: `${round}-raund uchun kalitni kengaytirish jarayoni`,
         inputKey: prevKey,
         outputKey: newKey,
         highlightedCells: [0, 1, 2, 3], // Highlight the first word that's directly transformed
@@ -144,7 +144,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
           xorResult
         },
         explanation: `
-          ${round}-round uchun kalitni kengaytirish jarayoni:
+          ${round}-raund uchun kalitni kengaytirish jarayoni:
           1. Oldingi kalitning oxirgi word qismini oling: [${lastWord.map(b => b.toString(16).padStart(2, '0')).join(', ')}]
           2. Wordni aylantiring: [${rotatedWord.map(b => b.toString(16).padStart(2, '0')).join(', ')}]
           3. Aylantirilgan word ga S-box ni qo'llang: [${sboxWord.map(b => b.toString(16).padStart(2, '0')).join(', ')}]
@@ -1558,7 +1558,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
           </span>
           <span className="flex items-center gap-2">
             <span className="w-3 h-3 bg-purple-500 rounded-full"></span>
-            Round {(initialKey.length === 16 ? 10 : initialKey.length === 24 ? 12 : 14)} kaliti
+            Raund {(initialKey.length === 16 ? 10 : initialKey.length === 24 ? 12 : 14)} kaliti
           </span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-3 shadow-inner">

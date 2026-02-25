@@ -28,6 +28,13 @@ export enum KeyLength {
   AES_256 = 256
 }
 
+const getNumRounds = (keyLength: KeyLength): number => (
+  keyLength === KeyLength.AES_128 ? 10 :
+  keyLength === KeyLength.AES_192 ? 12 : 14
+);
+
+const getKeyByteLength = (keyLength: KeyLength): number => keyLength / 8;
+
 // AES S-Box (Standard Rijndael S-box)
 export const SBOX = [
   0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
@@ -116,31 +123,50 @@ export const textToState = (text: string): number[] => {
   return block;
 };
 
-// Convert a hex key to array of bytes
-export const keyToBytes = (key: string): number[] => {
+// Convert a key string to bytes using selected key length
+export const keyToBytes = (
+  key: string,
+  keyLength: KeyLength = KeyLength.AES_128
+): number[] => {
+  const requiredBytes = getKeyByteLength(keyLength);
+  const requiredHexLength = requiredBytes * 2;
+
   // Remove spaces and convert to lowercase
   const cleanKey = key.replace(/\s/g, '').toLowerCase();
   
   // If it's a hex string, convert it
   if (/^[0-9a-f]+$/.test(cleanKey)) {
-    const bytes = [];
-    for (let i = 0; i < Math.min(cleanKey.length, 32); i += 2) {
+    const bytes: number[] = [];
+    for (let i = 0; i < Math.min(cleanKey.length, requiredHexLength); i += 2) {
       bytes.push(parseInt(cleanKey.substr(i, 2), 16));
     }
-    // Pad to 16 bytes if needed
-    while (bytes.length < 16) {
+    while (bytes.length < requiredBytes) {
       bytes.push(0);
     }
-    return bytes.slice(0, 16);
-  } 
+    return bytes.slice(0, requiredBytes);
+  }
   
-  // Otherwise, treat as UTF-8 text
-  return textToState(key);
+  // Otherwise, treat as UTF-8 text and normalize to selected key size
+  const wordArray = CryptoJS.enc.Utf8.parse(key);
+  const bytes: number[] = [];
+  const sigBytes = wordArray.sigBytes;
+  for (let i = 0; i < wordArray.words.length; i++) {
+    const word = wordArray.words[i];
+    const bytesInThisWord = Math.min(4, sigBytes - i * 4);
+    if (bytesInThisWord >= 1) bytes.push((word >>> 24) & 0xff);
+    if (bytesInThisWord >= 2) bytes.push((word >>> 16) & 0xff);
+    if (bytesInThisWord >= 3) bytes.push((word >>> 8) & 0xff);
+    if (bytesInThisWord >= 4) bytes.push(word & 0xff);
+  }
+  while (bytes.length < requiredBytes) {
+    bytes.push(0);
+  }
+  return bytes.slice(0, requiredBytes);
 };
 
 // Generate a random key as byte array based on key length
 export const generateRandomKey = (keyLength: KeyLength = KeyLength.AES_128): number[] => {
-  const keyBytes = keyLength / 8;
+  const keyBytes = getKeyByteLength(keyLength);
   const bytes = [];
   for (let i = 0; i < keyBytes; i++) {
     bytes.push(Math.floor(Math.random() * 256));
@@ -204,37 +230,42 @@ export const addRoundKey = (state: number[], roundKey: number[]): number[] => {
   return state.map((byte, i) => byte ^ roundKey[i]);
 };
 
-// Key expansion - generate round keys
+// Kalitni kengaytirish — raund kalitlarini generatsiya qilish
 export const keyExpansion = (key: number[], keyLength: KeyLength = KeyLength.AES_128): number[][] => {
-  const keyWords = key.length / 4;
-  const numRounds = keyLength === KeyLength.AES_128 ? 10 : 
-                    keyLength === KeyLength.AES_192 ? 12 : 14;
+  const requiredBytes = getKeyByteLength(keyLength);
+  const normalizedKey = key.slice(0, requiredBytes);
+  while (normalizedKey.length < requiredBytes) {
+    normalizedKey.push(0);
+  }
+
+  const keyWords = normalizedKey.length / 4;
+  const numRounds = getNumRounds(keyLength);
   
-  const roundKeys: number[][] = [key.slice()]; // First round key is the original key
+  const roundKeys: number[][] = [normalizedKey.slice()]; // 1-raund kaliti boshlang‘ich kalitning o‘zi hisoblanadi
   
   for (let round = 1; round <= numRounds; round++) {
     const prevKey = roundKeys[round - 1];
     const newKey = prevKey.slice();
     
-    // Rotate the last word and apply S-box
+    // Oxirgi word ni aylantirib, S-box ni qo‘llang
     const lastIndex = prevKey.length - 4;
     const lastWord = [prevKey[lastIndex], prevKey[lastIndex + 1], prevKey[lastIndex + 2], prevKey[lastIndex + 3]];
     const rotWord = [lastWord[1], lastWord[2], lastWord[3], lastWord[0]];
     const subWord = rotWord.map(byte => SBOX[byte]);
     
-    // Apply Rcon to the first byte
+    // Birinchi baytni Rcon bilan XOR qilinadi
     subWord[0] ^= RCON[round];
     
-    // Generate the first word of the new key
+    // Yangi kalitning birinchi word i generatsiya qilinadi
     newKey[0] = prevKey[0] ^ subWord[0];
     newKey[1] = prevKey[1] ^ subWord[1];
     newKey[2] = prevKey[2] ^ subWord[2];
     newKey[3] = prevKey[3] ^ subWord[3];
     
-    // Generate the rest of the words
+    // Qolgan word lar hosil qilinadi
     for (let i = 1; i < keyWords; i++) {
       const offset = i * 4;
-      // Special handling for AES-256 where every 4th word needs S-box transformation
+      // AES-256 holatida har to‘rtinchi word ga qo‘shimcha S-box (SubWord) qo‘llanadi
       if (keyLength === KeyLength.AES_256 && i === 4) {
         const tempWord = [newKey[offset - 4], newKey[offset - 3], newKey[offset - 2], newKey[offset - 1]];
         const subTempWord = tempWord.map(byte => SBOX[byte]);
@@ -269,19 +300,24 @@ export const aesRound = (state: number[], roundKey: number[], isLastRound: boole
 };
 
 // Complete AES encryption
-export const aesEncrypt = (plaintext: string, key: number[]): number[] => {
+export const aesEncrypt = (
+  plaintext: string,
+  key: number[],
+  keyLength: KeyLength = KeyLength.AES_128
+): number[] => {
   // Initial state
   const state = textToState(plaintext);
   
   // Key expansion
-  const roundKeys = keyExpansion(key);
+  const roundKeys = keyExpansion(key, keyLength);
+  const numRounds = getNumRounds(keyLength);
   
   // Initial round - just AddRoundKey
   let currentState = addRoundKey(state, roundKeys[0]);
   
   // Main rounds
-  for (let round = 1; round <= 10; round++) {
-    currentState = aesRound(currentState, roundKeys[round], round === 10);
+  for (let round = 1; round <= numRounds; round++) {
+    currentState = aesRound(currentState, roundKeys[round], round === numRounds);
   }
   
   return currentState;
@@ -387,7 +423,8 @@ export const getAesStepsForBlock = (
   mode: AesMode = AesMode.ECB,
   blockIndex: number = 0,
   previousCiphertextBlock?: number[],
-  iv?: number[]
+  iv?: number[],
+  keyLength: KeyLength = KeyLength.AES_128
 ): {
   steps: AesStep[],
   finalState: number[]
@@ -407,7 +444,8 @@ export const getAesStepsForBlock = (
   });
   
   const initialState = plaintextBytes;
-  const roundKeys = keyExpansion(key);
+  const roundKeys = keyExpansion(key, keyLength);
+  const numRounds = getNumRounds(keyLength);
   
   let currentState: number[];
   
@@ -477,7 +515,7 @@ export const getAesStepsForBlock = (
   
   currentState = afterInitialRound;
   
-  for (let round = 1; round <= 10; round++) {
+  for (let round = 1; round <= numRounds; round++) {
     const afterSubBytes = subBytes(currentState);
     steps.push({ 
       description: `Blok ${blockIndex + 1} — ${round}-bosqich — SubBytes`, 
@@ -498,7 +536,7 @@ export const getAesStepsForBlock = (
     
     let previousStateForAddRoundKey: number[];
     
-    if (round < 10) {
+    if (round < numRounds) {
       const afterMixColumns = mixColumns(afterShiftRows);
       steps.push({ 
         description: `Blok ${blockIndex + 1} — ${round}-bosqich — MixColumns`, 
@@ -561,7 +599,8 @@ export const getAesSteps = (
   key: number[], 
   mode: AesMode = AesMode.ECB,
   padding: PaddingType = PaddingType.PKCS7,
-  providedIv?: number[]
+  providedIv?: number[],
+  keyLength: KeyLength = KeyLength.AES_128
 ): {
   steps: AesStep[],
   finalCiphertext: {
@@ -618,7 +657,8 @@ export const getAesSteps = (
   const initialState = plaintextBytes;
   
   // Key expansion
-  const roundKeys = keyExpansion(key);
+  const roundKeys = keyExpansion(key, keyLength);
+  const numRounds = getNumRounds(keyLength);
   
   // Initial setup based on mode
   let currentState: number[];
@@ -675,7 +715,7 @@ export const getAesSteps = (
   currentState = afterInitialRound;
   
   // Main rounds
-  for (let round = 1; round <= 10; round++) {
+  for (let round = 1; round <= numRounds; round++) {
     // SubBytes
     const afterSubBytes = subBytes(currentState);
     steps.push({ 
@@ -698,7 +738,7 @@ export const getAesSteps = (
     
     let previousStateForAddRoundKey: number[];
     
-    if (round < 10) {
+    if (round < numRounds) {
       // MixColumns (not in final round)
       const afterMixColumns = mixColumns(afterShiftRows);
       steps.push({ 
@@ -756,7 +796,7 @@ export const getAesSteps = (
   steps.push({ 
     description: 'Yakuniy shifrlangan matn', 
     state: finalState,
-    explanation: `${mode} rejimida AES-128 yordamida olingan yakuniy shifrlangan natija.`
+    explanation: `${mode} rejimida AES-${keyLength} yordamida olingan yakuniy shifrlangan natija.`
   });
   
   // Process all blocks for multi-block support
@@ -775,7 +815,8 @@ export const getAesSteps = (
       mode,
       blockIndex,
       previousCiphertextBlock,
-      iv
+      iv,
+      keyLength
     );
     
     allBlocks.push({
@@ -817,22 +858,26 @@ export const getAesSteps = (
 };
 
 // Get key expansion steps with detailed explanations
-export const getKeyExpansionSteps = (key: number[]): { 
+export const getKeyExpansionSteps = (
+  key: number[],
+  keyLength: KeyLength = KeyLength.AES_128
+): { 
   description: string, 
   key: number[],
   explanation?: string,
   highlightedCells?: number[]
 }[] => {
-  const roundKeys = keyExpansion(key);
+  const roundKeys = keyExpansion(key, keyLength);
+  const numRounds = getNumRounds(keyLength);
   const steps = [];
   
   steps.push({
     description: 'Boshlang‘ich kalit',
     key: roundKeys[0],
-    explanation: 'Bu foydalanuvchi tomonidan berilgan asl 128-bitli kalitdir.'
+    explanation: `Bu foydalanuvchi tomonidan berilgan asl ${keyLength}-bitli kalitdir.`
   });
   
-  for (let round = 1; round <= 10; round++) {
+  for (let round = 1; round <= numRounds; round++) {
     const prevKey = roundKeys[round - 1];
     const currentKey = roundKeys[round];
     
@@ -850,10 +895,10 @@ export const getKeyExpansionSteps = (key: number[]): {
 
     // Show the key with highlighted cells for the new word
     steps.push({
-      description: `Round kaliti ${round}`,
+      description: `Raund kaliti ${round}`,
       key: currentKey,
       explanation: `
-        ${round}-round uchun kalitni kengaytirish jarayoni:
+        ${round}-raund uchun kalitni kengaytirish jarayoni:
         1. Oldingi kalitning oxirgi word qismini oling: [${lastWord.map(b => b.toString(16).padStart(2, '0')).join(', ')}]
         2. Wordni aylantiring: [${rotWord.map(b => b.toString(16).padStart(2, '0')).join(', ')}]
         3. Aylantirilgan word ga S-box ni qo‘llang: [${sboxWord.map(b => b.toString(16).padStart(2, '0')).join(', ')}]
@@ -871,7 +916,7 @@ export const getKeyExpansionSteps = (key: number[]): {
 // Return intermediate steps for each word expansion for visualization
 export function getKeyScheduleDetailedSteps(key: number[], keyLength = KeyLength.AES_128) {
   const keyWords = key.length / 4;
-  const numRounds = keyLength === KeyLength.AES_128 ? 10 : keyLength === KeyLength.AES_192 ? 12 : 14;
+  const numRounds = getNumRounds(keyLength);
 
   // Flatten byte array -> words
   let prevKey = key.slice();

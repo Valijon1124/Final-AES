@@ -14,8 +14,7 @@ import {
   realAesEncrypt,
   realAesDecrypt,
   testSpecificCase,
-  SBOX,
-  textToState
+  SBOX
 } from '@/utils/aes';
 import MatrixVisualizer from '@/components/MatrixVisualizer';
 import KeyGenerationVisualizer from '@/components/KeyGenerationVisualizer';
@@ -91,6 +90,8 @@ export default function Home() {
       const newKeyBytes = generateRandomKey(newKeyLength);
       setKeyBytes(newKeyBytes);
       setKey(bytesToHex(newKeyBytes));
+    } else {
+      updateKeyBytes(key, newKeyLength, keyInputFormat);
     }
   };
   
@@ -103,29 +104,34 @@ export default function Home() {
   const handleKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newKey = e.target.value;
     setKey(newKey);
-    updateKeyBytes(newKey);
+    updateKeyBytes(newKey, keyLength, keyInputFormat);
   };
 
   // Update key bytes based on current format
-  const updateKeyBytes = (keyValue: string) => {
+  const updateKeyBytes = (
+    keyValue: string,
+    targetKeyLength: KeyLength = keyLength,
+    inputFormat: KeyInputFormat = keyInputFormat
+  ) => {
     try {
-      if (keyInputFormat === 'hex') {
+      if (inputFormat === 'hex') {
         // If hex format, manually parse hex
         const cleanKey = keyValue.replace(/\s/g, '').toLowerCase();
         if (/^[0-9a-f]+$/.test(cleanKey) || cleanKey === '') {
-          const bytes = [];
-          for (let i = 0; i < Math.min(cleanKey.length, 32); i += 2) {
+          const requiredBytes = targetKeyLength / 8;
+          const requiredHexLength = requiredBytes * 2;
+          const bytes: number[] = [];
+          for (let i = 0; i < Math.min(cleanKey.length, requiredHexLength); i += 2) {
             bytes.push(parseInt(cleanKey.substr(i, 2), 16));
           }
-          // Pad to 16 bytes if needed
-          while (bytes.length < 16) {
+          while (bytes.length < requiredBytes) {
             bytes.push(0);
           }
-          setKeyBytes(bytes.slice(0, 16));
+          setKeyBytes(bytes.slice(0, requiredBytes));
         }
       } else {
         // If text format, convert text to bytes
-        setKeyBytes(textToState(keyValue));
+        setKeyBytes(keyToBytes(keyValue, targetKeyLength));
       }
     } catch (error) {
       console.error('Invalid key format');
@@ -137,7 +143,7 @@ export default function Home() {
     const newFormat = e.target.value as KeyInputFormat;
     setKeyInputFormat(newFormat);
     // Update key bytes with new format
-    updateKeyBytes(key);
+    updateKeyBytes(key, keyLength, newFormat);
   };
 
   // Handle input text change
@@ -158,7 +164,7 @@ export default function Home() {
           ? generateIV()
           : iv;
 
-    const result = getAesSteps(input, keyBytes, mode, padding, ivToUse);
+    const result = getAesSteps(input, keyBytes, mode, padding, ivToUse, keyLength);
     setIv(result.iv);
     return result;
   };
@@ -936,7 +942,7 @@ export default function Home() {
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-300 p-6 rounded-2xl shadow-lg">
                 <div className="flex items-center justify-between gap-3 mb-4">
                   <label className="font-bold text-blue-800 text-xl flex items-center gap-2">
-                    <span className="text-2xl">✨</span>
+                    <span className="text-2xl"></span>
                     Tanlangan IV (Initialization Vector)
                   </label>
                   <button
@@ -1402,6 +1408,25 @@ export default function Home() {
           </>
         )}
       </div>
+
+      <a
+        href="https://t.me/Valijon_11_24"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Telegram profil"
+        title="Telegram"
+        className="fixed bottom-6 right-6 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#229ED9] text-white shadow-xl transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sky-300"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="h-7 w-7"
+          aria-hidden="true"
+        >
+          <path d="M21.9 4.6L19.2 19c-.2 1-1 1.3-1.8.8l-4.1-3-2 1.9c-.2.2-.4.4-.8.4l.3-4.2 7.7-7c.3-.3-.1-.5-.5-.2l-9.5 6-4.1-1.3c-.9-.3-.9-.9.2-1.3L20 4c.8-.3 1.5.2 1.3 1.1z" />
+        </svg>
+      </a>
+
     </div>
   );
 }
