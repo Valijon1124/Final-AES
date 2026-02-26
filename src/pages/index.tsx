@@ -1398,24 +1398,6 @@ export default function Home() {
         )}
       </div>
 
-      <a
-        href="https://t.me/Valijon_11_24"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Telegram profil"
-        title="Telegram"
-        className="fixed bottom-6 right-6 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#229ED9] text-white shadow-xl transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sky-300"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="h-7 w-7"
-          aria-hidden="true"
-        >
-          <path d="M21.9 4.6L19.2 19c-.2 1-1 1.3-1.8.8l-4.1-3-2 1.9c-.2.2-.4.4-.8.4l.3-4.2 7.7-7c.3-.3-.1-.5-.5-.2l-9.5 6-4.1-1.3c-.9-.3-.9-.9.2-1.3L20 4c.8-.3 1.5.2 1.3 1.1z" />
-        </svg>
-      </a>
-
     </div>
   );
 }
