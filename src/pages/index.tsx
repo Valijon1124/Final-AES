@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Head from 'next/head';
 import { 
   keyToBytes, 
   generateRandomKey, 
@@ -827,9 +828,14 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto p-6 max-w-7xl">
-      <h1 className="text-4xl font-extrabold mb-3 gradient-text">AES shifrlash vizualizatsiyasi</h1>
-      <p className="text-slate-600 mb-8 text-lg">Kuchli va chiroyli kriptografiya algoritmi vizualizatsiyasi</p>
+    <>
+      <Head>
+        <title>AES shifrlash vizualizatsiyasi</title>
+        <meta name="description" content="AES shifrlash jarayoni va bosqichlarini interaktiv vizual korinishda organish dasturi" />
+      </Head>
+      <div className="container mx-auto p-6 max-w-7xl">
+        <h1 className="text-4xl font-extrabold mb-3 gradient-text">AES shifrlash vizualizatsiyasi</h1>
+        <p className="text-slate-600 mb-8 text-lg">Kuchli va chiroyli kriptografiya algoritmi vizualizatsiyasi</p>
       
       {/* Input and Key Section */}
       <div className="modern-card p-8 mb-8">
@@ -1398,6 +1404,7 @@ export default function Home() {
         )}
       </div>
 
-    </div>
+      </div>
+    </>
   );
 }
