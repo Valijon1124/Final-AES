@@ -823,8 +823,16 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
             )}
 
             {/* Enhanced MixColumns Operation Visualization */}
-            <div className="p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-300 mt-8 shadow-xl">
-              <h6 className="font-extrabold text-center text-blue-800 text-xl sm:text-2xl mb-6">MixColumns OPERATSIYASI BATAFSIL</h6>
+            <details className="p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-300 mt-8 shadow-xl">
+              <summary className="cursor-pointer list-none">
+                <div className="flex items-center justify-between gap-3">
+                  <h6 className="font-extrabold text-blue-800 text-lg sm:text-xl">MixColumns operatsiyasi batafsil</h6>
+                  <span className="text-xs font-semibold text-blue-700 bg-white border border-blue-200 rounded-full px-3 py-1">
+                    Ochish
+                  </span>
+                </div>
+              </summary>
+              <div className="mt-6">
               
               {/* Column-wise transformation visualization */}
               <div className="space-y-6">
@@ -883,8 +891,13 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                     {/* Detailed calculation for first column */}
                     {col === 0 && step.previousState && (
                       <details className="mt-6 p-4 sm:p-6 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-300 shadow-md">
-                        <summary className="text-lg font-bold text-yellow-800 mb-4 cursor-pointer select-none">
-                          Birinchi ustun uchun batafsil hisoblash
+                        <summary className="cursor-pointer list-none">
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="text-lg font-bold text-yellow-800">Birinchi ustun uchun batafsil hisoblash</span>
+                            <span className="text-xs font-semibold text-yellow-700 bg-white border border-yellow-300 rounded-full px-3 py-1">
+                              Ochish
+                            </span>
+                          </div>
                         </summary>
                         <div className="space-y-3 mt-4">
                           {[0, 1, 2, 3].map(row => {
@@ -1120,8 +1133,8 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                 </div>
               </div>
 
-              {/* Enhanced Legend */}
-              <div className="flex justify-center gap-6 text-base mt-6 flex-wrap">
+                {/* Enhanced Legend */}
+                <div className="flex justify-center gap-6 text-base mt-6 flex-wrap">
                 <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl shadow-md">
                   <div className="w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-500 border-2 border-purple-500 rounded-lg shadow-sm"></div>
                   <span className="font-bold text-purple-800">Kiruvchi</span>
@@ -1134,8 +1147,9 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                   <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-emerald-500 border-2 border-green-500 rounded-lg shadow-sm"></div>
                   <span className="font-bold text-green-800">Chiquvchi</span>
                 </div>
+                </div>
               </div>
-            </div>
+            </details>
             
             <div className="text-base text-slate-700 mt-6 p-4 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl border border-blue-300">
               <strong className="font-bold text-blue-900">Maqsad:</strong> Bu operatsiya eng kuchli diffuziya ta'minlaydi - 
@@ -1252,8 +1266,16 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                 )}
                 
                 {/* Enhanced XOR Operation Visualization */}
-                <div className="p-6 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl border-2 border-orange-300 mt-8 shadow-xl">
-                  <h6 className="font-extrabold text-center text-orange-800 text-xl sm:text-2xl mb-6">XOR OPERATSIYASI BATAFSIL</h6>
+                <details className="p-6 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl border-2 border-orange-300 mt-8 shadow-xl">
+                  <summary className="cursor-pointer list-none">
+                    <div className="flex items-center justify-between gap-3">
+                      <h6 className="font-extrabold text-orange-800 text-lg sm:text-xl">XOR operatsiyasi batafsil</h6>
+                      <span className="text-xs font-semibold text-orange-700 bg-white border border-orange-200 rounded-full px-3 py-1">
+                        Ochish
+                      </span>
+                    </div>
+                  </summary>
+                  <div className="mt-6">
                   
                   {/* Detailed XOR Example for First Byte */}
                   {step.previousState && step.roundKey && (
@@ -1406,7 +1428,8 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                       <span className="font-bold text-green-800">Natija</span>
                     </div>
                   </div>
-                </div>
+                  </div>
+                </details>
 
                 {/* Detailed explanation */}
                 <div className="text-base text-slate-700 mt-6 p-4 bg-gradient-to-br from-orange-100 to-yellow-100 rounded-xl border border-orange-300">

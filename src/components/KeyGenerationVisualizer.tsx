@@ -446,14 +446,22 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
         </div>
         
         {/* Step 1: Last Word */}
-        <div className="mb-6 p-5 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl shadow-lg border-2 border-yellow-300">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
-              1
+        <details className="mb-6 p-6 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl shadow-lg border-2 border-yellow-300">
+          <summary className="cursor-pointer list-none">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                  1
+                </div>
+                <h5 className="font-extrabold text-xl text-amber-800">Oxirgi word (Last Word)</h5>
+              </div>
+              <span className="text-xs font-semibold text-amber-700 bg-white border border-amber-200 rounded-full px-3 py-1">
+                Ochish
+              </span>
             </div>
-            <h5 className="font-bold text-xl text-amber-800">Oxirgi word (Last Word)</h5>
-          </div>
-          <div className="flex gap-2 mb-3 justify-center">
+          </summary>
+          <div className="mt-4">
+            <div className="flex gap-2 mb-3 justify-center">
             {details.lastWord.map((byte, i) => (
               <div key={i} className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-yellow-400 flex items-center justify-center text-sm font-mono bg-gradient-to-br from-yellow-200 to-amber-200 rounded-lg shadow-md font-bold text-yellow-900">
@@ -468,17 +476,26 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
               📍 <strong>Manba:</strong> Oldingi kalitning oxirgi 4 bayt qismi [12, 13, 14, 15] pozitsiyalaridan olinadi
             </p>
           </div>
-        </div>
+          </div>
+        </details>
 
         {/* Step 2: Rotated Word */}
-        <div className="mb-6 p-5 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl shadow-lg border-2 border-green-300">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
-              2
+        <details className="mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl shadow-lg border-2 border-green-300">
+          <summary className="cursor-pointer list-none">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                  2
+                </div>
+                <h5 className="font-extrabold text-xl text-green-800">Aylantirilgan word (RotWord)</h5>
+              </div>
+              <span className="text-xs font-semibold text-green-700 bg-white border border-green-200 rounded-full px-3 py-1">
+                Ochish
+              </span>
             </div>
-            <h5 className="font-bold text-xl text-green-800">Aylantirilgan word (RotWord)</h5>
-          </div>
-          <div className="flex gap-3 mb-3 justify-center items-center">
+          </summary>
+          <div className="mt-4">
+            <div className="flex gap-3 mb-3 justify-center items-center">
             <div className="flex gap-1">
               {details.lastWord.map((byte, i) => (
                 <div key={i} className="flex flex-col items-center">
@@ -505,16 +522,25 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
               🔄 <strong>Operatsiya:</strong> Har bir bayt bir pozitsiya chapga siljitiladi: <span className="font-mono">[a, b, c, d] → [b, c, d, a]</span>
             </p>
           </div>
-        </div>
+          </div>
+        </details>
 
         {/* Step 3: S-box Transformation */}
-        <div className="mb-6 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl shadow-lg border-2 border-purple-300">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
-              3
+        <details className="mb-6 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl shadow-lg border-2 border-purple-300">
+          <summary className="cursor-pointer list-none">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                  3
+                </div>
+                <h5 className="font-extrabold text-xl text-purple-800">S-box almashtirish (SubWord)</h5>
+              </div>
+              <span className="text-xs font-semibold text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1">
+                Ochish
+              </span>
             </div>
-            <h5 className="font-bold text-2xl text-purple-800">S-box almashtirish (SubWord)</h5>
-          </div>
+          </summary>
+          <div className="mt-4">
           
           {/* Top section: Input bytes and result */}
           <div className="mb-6">
@@ -599,18 +625,26 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
           <div className="w-full">
             {renderSBoxTableSnippet(details.rotatedWord[selectedByteIndex], details.sboxWord[selectedByteIndex])}
           </div>
-        </div>
+          </div>
+        </details>
 
         {/* Step 4: RCON Application */}
-        <div className="mb-6 p-6 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl shadow-lg border-2 border-red-300">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
-              4
+        <details className="mb-6 p-6 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl shadow-lg border-2 border-red-300">
+          <summary className="cursor-pointer list-none">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                  4
+                </div>
+                <h5 className="font-extrabold text-xl text-red-700">RCON qo'shish jarayoni</h5>
+              </div>
+              <span className="text-xs font-semibold text-red-700 bg-white border border-red-200 rounded-full px-3 py-1">
+                Ochish
+              </span>
             </div>
-            <h5 className="font-extrabold text-2xl text-red-700">RCON QO'SHISH JARAYONI</h5>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          </summary>
+          <div className="mt-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Left side: RCON explanation */}
             <div className="bg-gradient-to-br from-white to-red-50 p-6 rounded-xl shadow-xl border-2 border-red-300">
               <div className="flex items-center gap-2 mb-4">
@@ -808,18 +842,26 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </details>
 
         {/* Step 5: XOR with Previous Key */}
-        <div className="mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl shadow-lg border-2 border-green-300">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
-              5
+        <details className="mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl shadow-lg border-2 border-green-300">
+          <summary className="cursor-pointer list-none">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                  5
+                </div>
+                <h5 className="font-extrabold text-xl text-green-700">Yangi kalitning birinchi word'i yaratilishi</h5>
+              </div>
+              <span className="text-xs font-semibold text-green-700 bg-white border border-green-200 rounded-full px-3 py-1">
+                Ochish
+              </span>
             </div>
-            <h5 className="font-extrabold text-2xl text-green-700">YANGI KALITNING BIRINCHI WORD I YARATILISHI</h5>
-          </div>
-          
-          <div className="bg-gradient-to-br from-white to-green-50 p-6 rounded-xl shadow-xl border-2 border-green-400 mb-6">
+          </summary>
+          <div className="mt-4">
+            <div className="bg-gradient-to-br from-white to-green-50 p-6 rounded-xl shadow-xl border-2 border-green-400 mb-6">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-2xl">💡</span>
               <h6 className="font-bold text-xl text-green-800">Bu qadam nima qiladi?</h6>
@@ -1314,7 +1356,8 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </details>
       </div>
     );
   };
