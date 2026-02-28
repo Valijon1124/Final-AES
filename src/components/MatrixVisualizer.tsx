@@ -17,8 +17,8 @@ const MatrixVisualizer: React.FC<MatrixVisualizerProps> = ({
   isKey = false,
   highlightedCells = [],
   operationType,
-  showRowLabels = true,
-  showColumnLabels = true,
+  showRowLabels = false,
+  showColumnLabels = false,
   hideDetails = false
 }) => {
   // Format a byte as hex string
@@ -77,7 +77,7 @@ const MatrixVisualizer: React.FC<MatrixVisualizerProps> = ({
                     operationType === 'MixColumns' ? 'bg-blue-100 text-blue-800' : 'text-gray-600'
                   }`}
                 >
-                  Col {col}
+                  {col}
                 </div>
               ))}
             </div>
@@ -97,7 +97,7 @@ const MatrixVisualizer: React.FC<MatrixVisualizerProps> = ({
                     'text-gray-600 border-2 border-gray-300'
                   }`}
                 >
-                  Row {row}
+                  {row}
                 </div>
               )}
               
@@ -146,19 +146,19 @@ const MatrixVisualizer: React.FC<MatrixVisualizerProps> = ({
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-gray-300 rounded"></div>
-                  <span>Row 0: siljitilmaydi (0 ta)</span>
+                  <span>0-qator: siljitilmaydi (0 ta)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-300 rounded"></div>
-                  <span>Row 1: 1 ta chapga siljitiladi</span>
+                  <span>1-qator: 1 ta chapga siljitiladi</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-300 rounded"></div>
-                  <span>Row 2: 2 ta chapga siljitiladi</span>
+                  <span>2-qator: 2 ta chapga siljitiladi</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-300 rounded"></div>
-                  <span>Row 3: 3 ta chapga siljitiladi</span>
+                  <span>3-qator: 3 ta chapga siljitiladi</span>
                 </div>
               </div>
             </div>

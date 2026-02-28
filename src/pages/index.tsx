@@ -523,8 +523,8 @@ export default function Home() {
             <MatrixVisualizer 
               matrix={step.previousState}
               activeIndices={[]}
-              showRowLabels={true}
-              showColumnLabels={true}
+              showRowLabels={false}
+              showColumnLabels={false}
             />
           </div>
           
@@ -539,8 +539,8 @@ export default function Home() {
             <MatrixVisualizer 
               matrix={step.roundKey}
               activeIndices={[]}
-              showRowLabels={true}
-              showColumnLabels={true}
+              showRowLabels={false}
+              showColumnLabels={false}
             />
           </div>
           
@@ -555,8 +555,8 @@ export default function Home() {
             <MatrixVisualizer 
               matrix={step.state}
               activeIndices={Array.from(Array(16).keys())}
-              showRowLabels={true}
-              showColumnLabels={true}
+              showRowLabels={false}
+              showColumnLabels={false}
             />
           </div>
         </div>

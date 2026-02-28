@@ -216,30 +216,10 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
       <div className="flex flex-col items-center bg-white p-6 rounded-xl shadow-lg border-2 border-blue-100">
         {title && <h4 className="font-bold mb-4 text-xl text-slate-800">{title}</h4>}
         
-        {/* Column headers */}
-        <div className="flex justify-center mb-3">
-          <div className="w-10"></div> {/* Spacer for row labels */}
-          <div className="flex gap-2">
-            {[0, 1, 2, 3].map(col => (
-              <div 
-                key={col} 
-                className="w-14 h-8 flex items-center justify-center text-sm font-bold text-gray-700 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-sm"
-              >
-                Col {col}
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        {/* Matrix with row labels */}
+        {/* Matrix */}
         <div className="space-y-2">
           {[0, 1, 2, 3].map(row => (
-            <div key={row} className="flex items-center gap-2">
-              {/* Row label */}
-              <div className="w-10 h-14 flex items-center justify-center text-sm font-bold text-gray-700 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-sm border-2 border-gray-300">
-                R{row}
-              </div>
-              
+            <div key={row} className="flex items-center">
               {/* Matrix cells for this row */}
               <div className="flex gap-2">
                 {[0, 1, 2, 3].map(col => {
@@ -292,7 +272,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
         <span className="text-sm">→</span>
         <div className="text-xs">
           <div>S-box[{formatByte(inputByte)}] = S-box[{row}][{col}]</div>
-          <div className="text-gray-600">Row: {row}, Col: {col}</div>
+          <div className="text-gray-600">Qator: {row}, Ustun: {col}</div>
         </div>
         <span className="text-sm">→</span>
         <div className="w-8 h-8 border border-gray-300 flex items-center justify-center text-xs font-mono bg-purple-100">
@@ -319,10 +299,10 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
               <span className="text-purple-700">Kirish:</span> <span className="font-mono">{formatByte(inputByte).toUpperCase()}</span> = <span className="font-mono">{inputByte.toString(2).padStart(8, '0')}₂</span>
             </p>
             <p className="text-sm font-semibold">
-              <span className="text-purple-700">Row (yuqori 4 bit):</span> <span className="font-mono">{row.toString(2).padStart(4, '0')}₂</span> = <span className="font-mono">{row}₁₀</span>
+              <span className="text-purple-700">Yuqori 4 bit (qator):</span> <span className="font-mono">{row.toString(2).padStart(4, '0')}₂</span> = <span className="font-mono">{row}₁₀</span>
             </p>
             <p className="text-sm font-semibold">
-              <span className="text-purple-700">Col (quyi 4 bit):</span> <span className="font-mono">{col.toString(2).padStart(4, '0')}₂</span> = <span className="font-mono">{col}₁₀</span>
+              <span className="text-purple-700">Quyi 4 bit (ustun):</span> <span className="font-mono">{col.toString(2).padStart(4, '0')}₂</span> = <span className="font-mono">{col}₁₀</span>
             </p>
             <p className="text-sm font-semibold">
               <span className="text-purple-700">S-box[{row}][{col}] =</span> <span className="font-mono text-green-600 font-bold">{formatByte(outputByte).toUpperCase()}</span> = <span className="font-mono">{outputByte}₁₀</span>

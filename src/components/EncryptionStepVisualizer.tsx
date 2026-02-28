@@ -124,8 +124,8 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
             <MatrixVisualizer
               matrix={step.previousState}
               activeIndices={[]}
-              showRowLabels={true}
-              showColumnLabels={true}
+              showRowLabels={false}
+              showColumnLabels={false}
             />
           </div>
 
@@ -138,8 +138,8 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
             <MatrixVisualizer
               matrix={step.roundKey}
               activeIndices={[]}
-              showRowLabels={true}
-              showColumnLabels={true}
+              showRowLabels={false}
+              showColumnLabels={false}
             />
           </div>
 
@@ -152,8 +152,8 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
             <MatrixVisualizer
               matrix={step.state}
               activeIndices={Array.from(Array(16).keys())}
-              showRowLabels={true}
-              showColumnLabels={true}
+              showRowLabels={false}
+              showColumnLabels={false}
             />
           </div>
         </div>
@@ -175,8 +175,8 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
             <MatrixVisualizer 
               matrix={step.previousState}
               activeIndices={[]}
-              showRowLabels={true}
-              showColumnLabels={true}
+              showRowLabels={false}
+              showColumnLabels={false}
             />
           </div>
           
@@ -191,8 +191,8 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
             <MatrixVisualizer 
               matrix={step.roundKey}
               activeIndices={[]}
-              showRowLabels={true}
-              showColumnLabels={true}
+              showRowLabels={false}
+              showColumnLabels={false}
             />
           </div>
           
@@ -207,8 +207,8 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
             <MatrixVisualizer 
               matrix={step.state}
               activeIndices={Array.from(Array(16).keys())}
-              showRowLabels={true}
-              showColumnLabels={true}
+              showRowLabels={false}
+              showColumnLabels={false}
             />
           </div>
         </div>
@@ -470,9 +470,6 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                     <div className="space-y-2 w-fit mx-auto">
                       {[0, 1, 2, 3].map(row => (
                         <div key={row} className="flex items-center gap-2">
-                          <div className="w-8 h-8 flex items-center justify-center text-xs font-bold bg-gradient-to-br from-gray-300 to-gray-400 rounded-lg shadow-sm">
-                            R{row}
-                          </div>
                           <div className="flex gap-2">
                             {[0, 1, 2, 3].map(col => {
                               const index = row + col * 4;
@@ -486,7 +483,7 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                                       ? 'bg-gradient-to-br from-yellow-300 to-amber-400 border-yellow-600 text-yellow-900 shadow-xl scale-110 font-bold'
                                       : 'bg-gradient-to-br from-yellow-100 to-orange-100 border-yellow-400 text-gray-800 hover:border-yellow-600 hover:shadow-lg'
                                   }`}
-                                  title={`Byte [${row},${col}] - Bosish orqali S-box lookup ko'ring`}
+                                  title={`Bayt [${row},${col}] - Bosish orqali S-box jadvalidan ko'ring`}
                                 >
                                   {formatByte(step.previousState![index])}
                                 </button>
@@ -512,9 +509,6 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                     <div className="space-y-2 w-fit mx-auto">
                       {[0, 1, 2, 3].map(row => (
                         <div key={row} className="flex items-center gap-2">
-                          <div className="w-8 h-8 flex items-center justify-center text-xs font-bold bg-gradient-to-br from-gray-300 to-gray-400 rounded-lg shadow-sm">
-                            R{row}
-                          </div>
                           <div className="flex gap-2">
                             {[0, 1, 2, 3].map(col => {
                               const index = row + col * 4;
@@ -528,7 +522,7 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                                       ? 'bg-gradient-to-br from-purple-400 to-pink-400 border-purple-600 text-white shadow-xl scale-110 font-bold'
                                       : 'bg-gradient-to-br from-purple-100 to-pink-100 border-purple-400 text-gray-800 hover:border-purple-600 hover:shadow-lg'
                                   }`}
-                                  title={`Byte [${row},${col}] - Bosish orqali S-box lookup ko'ring`}
+                                  title={`Bayt [${row},${col}] - Bosish orqali S-box jadvalidan ko'ring`}
                                 >
                                   {formatByte(step.state[index])}
                                 </button>
@@ -604,9 +598,6 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                   <div className="space-y-3 w-fit mx-auto">
                     {[0, 1, 2, 3].map(row => (
                       <div key={row} className="flex items-center gap-3">
-                        <div className="w-10 h-10 flex items-center justify-center text-sm font-bold bg-gradient-to-br from-gray-300 to-gray-400 rounded-lg shadow-sm">
-                          R{row}
-                        </div>
                         <div className="flex gap-2">
                           {[0, 1, 2, 3].map(col => {
                             const index = row + col * 4;
@@ -647,9 +638,6 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                       const shiftAmount = row; // Row 0: 0, Row 1: 1, Row 2: 2, Row 3: 3
                       return (
                         <div key={row} className="flex items-center gap-3">
-                          <div className="w-10 h-10 flex items-center justify-center text-sm font-bold bg-gradient-to-br from-gray-300 to-gray-400 rounded-lg shadow-sm">
-                            R{row}
-                          </div>
                           <div className="flex gap-2">
                             {[0, 1, 2, 3].map(col => {
                               const index = row + col * 4;
@@ -692,22 +680,22 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
               {/* Row shift explanations */}
               <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="text-center p-4 bg-white rounded-xl border-2 border-gray-400 shadow-md hover:shadow-lg transition-all">
-                  <div className="text-lg font-bold text-gray-800 mb-2">Row 0</div>
+                  <div className="text-lg font-bold text-gray-800 mb-2">0-qator</div>
                   <div className="text-sm text-gray-600 font-semibold bg-gray-100 p-2 rounded-lg">0 ta siljitish</div>
                   <div className="text-xs text-gray-500 mt-2">Qator o'zgarmaydi</div>
                 </div>
                 <div className="text-center p-4 bg-white rounded-xl border-2 border-green-400 shadow-md hover:shadow-lg transition-all">
-                  <div className="text-lg font-bold text-green-800 mb-2">Row 1</div>
+                  <div className="text-lg font-bold text-green-800 mb-2">1-qator</div>
                   <div className="text-sm text-green-700 font-semibold bg-green-100 p-2 rounded-lg">1 ta chapga</div>
                   <div className="text-xs text-gray-500 mt-2">Bayt[1,0]→[1,3], [1,1]→[1,0], ...</div>
                 </div>
                 <div className="text-center p-4 bg-white rounded-xl border-2 border-emerald-400 shadow-md hover:shadow-lg transition-all">
-                  <div className="text-lg font-bold text-emerald-800 mb-2">Row 2</div>
+                  <div className="text-lg font-bold text-emerald-800 mb-2">2-qator</div>
                   <div className="text-sm text-emerald-700 font-semibold bg-emerald-100 p-2 rounded-lg">2 ta chapga</div>
                   <div className="text-xs text-gray-500 mt-2">Bayt[2,0]→[2,2], [2,1]→[2,3], ...</div>
                 </div>
                 <div className="text-center p-4 bg-white rounded-xl border-2 border-teal-400 shadow-md hover:shadow-lg transition-all">
-                  <div className="text-lg font-bold text-teal-800 mb-2">Row 3</div>
+                  <div className="text-lg font-bold text-teal-800 mb-2">3-qator</div>
                   <div className="text-sm text-teal-700 font-semibold bg-teal-100 p-2 rounded-lg">3 ta chapga</div>
                   <div className="text-xs text-gray-500 mt-2">Bayt[3,0]→[3,1], [3,1]→[3,2], ...</div>
                 </div>
@@ -747,7 +735,6 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                     <div className="space-y-2">
                       {[0, 1, 2, 3].map(row => (
                         <div key={row} className="flex items-center gap-2">
-                          <div className="w-8 h-8 flex items-center justify-center text-xs font-bold bg-purple-200 text-purple-800 rounded border-2 border-purple-300">R{row}</div>
                           <div className="flex gap-2">
                             {[0, 1, 2, 3].map(col => {
                               const index = row + col * 4;
@@ -802,7 +789,6 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                     <div className="space-y-2">
                       {[0, 1, 2, 3].map(row => (
                         <div key={row} className="flex items-center gap-2">
-                          <div className="w-8 h-8 flex items-center justify-center text-xs font-bold bg-green-200 text-green-800 rounded border-2 border-green-300">R{row}</div>
                           <div className="flex gap-2">
                             {[0, 1, 2, 3].map(col => {
                               const index = row + col * 4;
@@ -1179,7 +1165,6 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                         <div className="space-y-2">
                           {[0, 1, 2, 3].map(row => (
                             <div key={row} className="flex items-center gap-2">
-                              <div className="w-8 h-8 flex items-center justify-center text-xs font-bold bg-red-200 text-red-800 rounded border-2 border-red-300">R{row}</div>
                               <div className="flex gap-1">
                                 {[0, 1, 2, 3].map(col => {
                                   const index = row + col * 4;
@@ -1212,7 +1197,6 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                         <div className="space-y-2">
                           {[0, 1, 2, 3].map(row => (
                             <div key={row} className="flex items-center gap-2">
-                              <div className="w-8 h-8 flex items-center justify-center text-xs font-bold bg-blue-200 text-blue-800 rounded border-2 border-blue-300">R{row}</div>
                               <div className="flex gap-1">
                                 {[0, 1, 2, 3].map(col => {
                                   const index = row + col * 4;
@@ -1245,7 +1229,6 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                       <div className="space-y-2">
                         {[0, 1, 2, 3].map(row => (
                           <div key={row} className="flex items-center gap-2">
-                              <div className="w-8 h-8 flex items-center justify-center text-xs font-bold bg-green-200 text-green-800 rounded border-2 border-green-300">R{row}</div>
                               <div className="flex gap-1">
                               {[0, 1, 2, 3].map(col => {
                                 const index = row + col * 4;
