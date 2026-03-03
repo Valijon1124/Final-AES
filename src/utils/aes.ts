@@ -1213,11 +1213,8 @@ export const testSpecificCase = (): string => {
   const plaintext = "Salom, AES!";
   const key = "cc 0e c1 70 24 24 01 8d 4e fd 5e f3 8d 15 2f 63";
   
-  // Create key and input as byte arrays
-  const keyBytes = [];
-  for (let i = 0; i < key.length; i += 2) {
-    keyBytes.push(parseInt(key.substr(i, 2), 16));
-  }
+  // Parse key using the same normalization used by the app
+  const keyBytes = keyToBytes(key, KeyLength.AES_128);
   
   // Use our implementation
   const { finalCiphertext } = getAesSteps(plaintext, keyBytes, AesMode.ECB, PaddingType.PKCS7);

@@ -43,9 +43,10 @@ const MatrixVisualizer: React.FC<MatrixVisualizerProps> = ({
     
     // Highlight based on operation type
     if (operationType === 'ShiftRows') {
-      // Highlight rows that are being shifted (Row 1, 2, 3, not Row 0)
-      const row = Math.floor(index / 4);
-      return row > 0; // Rows 1, 2, 3 are shifted (indices 4-15)
+      // State is column-major: row is derived from index % 4
+      // Highlight rows 1, 2, 3 (row 0 is unchanged)
+      const row = index % 4;
+      return row > 0;
     }
     
     if (operationType === 'MixColumns') {

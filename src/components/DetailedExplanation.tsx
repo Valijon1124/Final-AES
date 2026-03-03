@@ -261,7 +261,7 @@ const DetailedExplanation: React.FC<DetailedExplanationProps> = ({
       <div>
         <h3 className="font-bold mb-2">AddRoundKey amaliyoti</h3>
         <p className="mb-4">
-          Holat matritsasidagi har bir bayt round kalitdagi mos bayt bilan XOR amali orqali birlashtiriladi.
+          Holat matritsasidagi har bir bayt raund kalitdagi mos bayt bilan XOR amali orqali birlashtiriladi.
           Bu — bevosita key dan foydalaniladigan yagona bosqichdir.
         </p>
         

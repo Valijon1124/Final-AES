@@ -34,7 +34,7 @@ export default function KeyScheduleDiagram({ initialKey, stepData }: KeySchedule
   // g() bosqichlaridan qiymatlar
   const core = stepData?.stepDetails || [];
 
-  // Odatda key schedule'da w_4 = w_0 xor g(w_3) va h.k.
+  // Odatda key schedule'da w_4 = w_0 ⊕ g(w_3) va h.k.
 
   return (
     <div className="w-full flex flex-col lg:flex-row gap-6 p-2">
@@ -57,7 +57,7 @@ export default function KeyScheduleDiagram({ initialKey, stepData }: KeySchedule
         </div>
         {/* g() ga nuqtali strelka */}
         <div className="flex justify-center my-1"><span className="text-lg font-bold text-gray-400">↳</span><span className="text-xs text-orange-400 ml-1">g()</span></div>
-        {/* XOR aylanmalari va chiqariladigan w_i lar. (Bir nechta misol ko'rsatish mumkin) */}
+        {/* ⊕ aylanmalari va chiqariladigan w_i lar. (Bir nechta misol ko'rsatish mumkin) */}
       </div>
       {/* O'ng blok: g() yadrosi diagrammasi */}
       <div className="flex-1 min-w-[240px] max-w-[420px] mx-auto bg-orange-50 border border-orange-200 rounded-xl shadow p-4">

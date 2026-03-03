@@ -216,7 +216,7 @@ export default function Home() {
       const result = realAesEncrypt(input, keyHex, newMode, paddingType, outputFormat, keyLength, ivHex);
       setRealCiphertext(result.formats);
 
-      if (input === 'Hello, AES!' && keyHex === 'cc 0e c1 70 24 24 01 8d 4e fd 5e f3 8d 15 2f 63' && newMode === AesMode.ECB) {
+      if (input === 'Salom, AES!' && keyHex === 'cc 0e c1 70 24 24 01 8d 4e fd 5e f3 8d 15 2f 63' && newMode === AesMode.ECB) {
         setTestResult(testSpecificCase());
       }
     } catch (err) {
@@ -282,7 +282,7 @@ export default function Home() {
     setRealCiphertext(result.formats);
     
     // Run test case with the specific test input
-    if (input === 'Hello, AES!' && keyHex === 'cc 0e c1 70 24 24 01 8d 4e fd 5e f3 8d 15 2f 63' && aesMode === AesMode.ECB) {
+    if (input === 'Salom, AES!' && keyHex === 'cc 0e c1 70 24 24 01 8d 4e fd 5e f3 8d 15 2f 63' && aesMode === AesMode.ECB) {
       setTestResult(testSpecificCase());
     }
   };
@@ -628,8 +628,10 @@ export default function Home() {
               <h4 className="font-bold text-lg text-green-900">Shifrlash kaliti:</h4>
             </div>
             <div className="p-4 bg-white rounded-lg border-2 border-green-200 shadow-sm">
-              <div className="font-mono flex items-center justify-between gap-3 flex-wrap">
-                <span className="break-all text-gray-800 font-semibold">Hex: {bytesToHex(keyBytes, '')}</span>
+              <div className="font-mono flex items-start justify-between gap-3 flex-wrap sm:flex-nowrap">
+                <div className="flex-1 min-w-0">
+                  <span className="block break-all text-gray-800 font-semibold">Hex: {bytesToHex(keyBytes, ' ')}</span>
+                </div>
                 <button
                   onClick={() => copyToClipboard(bytesToHex(keyBytes, ''), 'key')}
                   className={`px-4 py-2 rounded-lg font-semibold text-sm flex-shrink-0 transition-all transform hover:scale-105 ${
@@ -654,8 +656,10 @@ export default function Home() {
                   {aesMode === AesMode.CBC ? 'Initialization Vector (IV)' : 'Counter (Nonce)'}:
                 </h4>
               </div>
-              <div className="p-4 bg-white rounded-lg border-2 border-orange-200 shadow-sm font-mono flex items-center justify-between gap-3 flex-wrap">
-                <span className="break-all text-gray-800 font-semibold">{bytesToHex(iv)}</span>
+              <div className="p-4 bg-white rounded-lg border-2 border-orange-200 shadow-sm font-mono flex items-start justify-between gap-3 flex-wrap sm:flex-nowrap">
+                <div className="flex-1 min-w-0">
+                  <span className="block break-all text-gray-800 font-semibold">{bytesToHex(iv)}</span>
+                </div>
                 <button
                   onClick={() => copyToClipboard(bytesToHex(iv, ''), 'iv')}
                   className={`px-4 py-2 rounded-lg font-semibold text-sm flex-shrink-0 transition-all transform hover:scale-105 ${
@@ -859,11 +863,11 @@ export default function Home() {
             <span>🔑</span>
             <span>Kalit:</span>
           </label>
-          <div className="flex gap-3 mb-2">
+          <div className="flex flex-col sm:flex-row gap-3 mb-2">
             <select
               value={keyInputFormat}
               onChange={handleKeyFormatChange}
-              className="modern-select w-32"
+              className="modern-select w-full sm:w-32 flex-shrink-0"
             >
               <option value="hex">📝 Hex</option>
               <option value="text">📄 Matn</option>
@@ -872,12 +876,12 @@ export default function Home() {
               type="text"
               value={key}
               onChange={handleKeyChange}
-              className="modern-input flex-grow"
+              className="modern-input flex-grow min-w-0"
               placeholder={keyInputFormat === 'hex' ? "Kalit kiriting (hex)...masalan: cc 0e c1 70 24 24 01 8d 4e fd 5e f3 8d 15 2f 63" : "Kalit kiriting (matn)...masalan: mysecretkey"}
             />
             <button 
               onClick={handleRandomKey}
-              className="modern-button modern-button-info whitespace-nowrap"
+              className="modern-button modern-button-info whitespace-nowrap w-full sm:w-auto"
             >
               🎲 Random
             </button>

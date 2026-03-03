@@ -26,7 +26,7 @@ const SBoxTable: React.FC = () => {
   };
 
   const getSearchResult = () => {
-    if (!selectedByte) return null;
+    if (selectedByte === null) return null;
     const row = (selectedByte >> 4) & 0x0F;
     const col = selectedByte & 0x0F;
     const sboxValue = SBOX[selectedByte];
@@ -217,6 +217,5 @@ const SBoxTable: React.FC = () => {
 };
 
 export default SBoxTable;
-
 
 
