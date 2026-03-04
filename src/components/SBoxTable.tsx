@@ -176,8 +176,8 @@ const SBoxTable: React.FC = () => {
                 <strong className="text-blue-700">Qidirish usuli:</strong> Agar kirish bayti AB bo'lsa:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-sm">
-                <li className="font-mono"><strong className="text-purple-700">Row</strong> = A (yuqori 4 bit) = 10₁₀</li>
-                <li className="font-mono"><strong className="text-purple-700">Col</strong> = B (quyi 4 bit) = 11₁₀</li>
+                <li className="font-mono"><strong className="text-purple-700">Qator</strong> = A (yuqori 4 bit) = 10₁₀</li>
+                <li className="font-mono"><strong className="text-purple-700">Ustun</strong> = B (quyi 4 bit) = 11₁₀</li>
                 <li className="font-mono font-bold text-green-700">S-box[10][11] = {formatByte(SBOX[10 * 16 + 11])}</li>
               </ul>
             </div>
@@ -192,7 +192,7 @@ const SBoxTable: React.FC = () => {
                 <strong className="text-purple-700">Masalan:</strong> AB → S-box[A][B] = {formatByte(SBOX[0xAB])}
               </p>
               <div className="text-xs text-gray-600 font-mono bg-gray-50 p-2 rounded">
-                Kirish: AB → Row=A (10), Col=B (11) → Chiqish: {formatByte(SBOX[0xAB])}
+                Kirish: AB → Qator=A (10), Ustun=B (11) → Chiqish: {formatByte(SBOX[0xAB])}
               </div>
             </div>
           </div>

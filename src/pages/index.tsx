@@ -1225,7 +1225,7 @@ export default function Home() {
             <h3 className="font-bold mb-2">AES S-box jadvali</h3>
             <p className="mb-4">
               S-box (Substitution box) AES algoritmidagi eng muhim komponentlardan biridir. 
-              Bu 16×16 matritsa bo'lib, har bir 8-bitli input uchun 8-bitli output beradi.
+              Bu 16×16 matritsa bo'lib, har bir 8-bitli kirish uchun 8-bitli chiqish beradi.
             </p>
             
             <div className="bg-gray-100 p-4 rounded">
@@ -1244,8 +1244,8 @@ export default function Home() {
                 Agar kirish bayt AB bo'lsa:
               </p>
               <ul className="list-disc pl-6 text-sm">
-                <li>Row = A (yuqori 4 bit) = 10₁₀</li>
-                <li>Col = B (quyi 4 bit) = 11₁₀</li>
+                <li>Qator = A (yuqori 4 bit) = 10₁₀</li>
+                <li>Ustun = B (quyi 4 bit) = 11₁₀</li>
                 <li>S-box[10][11] = {formatByte(SBOX[0xAB])}</li>
               </ul>
             </div>
@@ -1316,7 +1316,7 @@ export default function Home() {
             </div>
             
             <p className="mt-4">
-              Kalitni kengaytirish har bir raund da turli, ammo o'zaro bog'liq kalitlardan foydalanishni ta'minlab, turli hujumlarga qarshi barqarorlikni yaratadi.
+              Kalitni kengaytirish har bir raundda turli, ammo o'zaro bog'liq kalitlardan foydalanishni ta'minlab, turli hujumlarga qarshi barqarorlikni yaratadi.
               Bu AES ning xavfsizligi uchun juda muhimdir.
             </p>
           </div>

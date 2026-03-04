@@ -224,6 +224,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
 
   const steps = generateKeyExpansionSteps(initialKey);
   const currentStepData = steps[currentStep];
+  const hasStepExplanation = Boolean(currentStepData.explanation?.trim());
   const enumLen =
     initialKey.length === 16
       ? KeyLength.AES_128
@@ -722,7 +723,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
         </div>
         
         {/* Step 1: Last Word */}
-        <details className="mb-6 p-6 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl shadow-lg border-2 border-yellow-300">
+        <details className="group mb-6 p-6 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl shadow-lg border-2 border-yellow-300">
           <summary className="cursor-pointer list-none">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -732,7 +733,8 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                 <h5 className="font-extrabold text-xl text-amber-800">Oxirgi word (Last Word)</h5>
               </div>
               <span className="text-xs font-semibold text-amber-700 bg-white border border-amber-200 rounded-full px-3 py-1">
-                Ochish
+                <span className="group-open:hidden">Ochish</span>
+                <span className="hidden group-open:inline">Yopish</span>
               </span>
             </div>
           </summary>
@@ -756,7 +758,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
         </details>
 
         {/* Step 2: Rotated Word */}
-        <details className="mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl shadow-lg border-2 border-green-300">
+        <details className="group mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl shadow-lg border-2 border-green-300">
           <summary className="cursor-pointer list-none">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -766,7 +768,8 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                 <h5 className="font-extrabold text-xl text-green-800">Aylantirilgan word (RotWord)</h5>
               </div>
               <span className="text-xs font-semibold text-green-700 bg-white border border-green-200 rounded-full px-3 py-1">
-                Ochish
+                <span className="group-open:hidden">Ochish</span>
+                <span className="hidden group-open:inline">Yopish</span>
               </span>
             </div>
           </summary>
@@ -802,7 +805,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
         </details>
 
         {/* Step 3: S-box Transformation */}
-        <details className="mb-6 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl shadow-lg border-2 border-purple-300">
+        <details className="group mb-6 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl shadow-lg border-2 border-purple-300">
           <summary className="cursor-pointer list-none">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -812,7 +815,8 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                 <h5 className="font-extrabold text-xl text-purple-800">S-box almashtirish (SubWord)</h5>
               </div>
               <span className="text-xs font-semibold text-purple-700 bg-white border border-purple-200 rounded-full px-3 py-1">
-                Ochish
+                <span className="group-open:hidden">Ochish</span>
+                <span className="hidden group-open:inline">Yopish</span>
               </span>
             </div>
           </summary>
@@ -905,7 +909,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
         </details>
 
         {/* Step 4: RCON Application */}
-        <details className="mb-6 p-6 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl shadow-lg border-2 border-red-300">
+        <details className="group mb-6 p-6 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl shadow-lg border-2 border-red-300">
           <summary className="cursor-pointer list-none">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -915,7 +919,8 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                 <h5 className="font-extrabold text-xl text-red-700">RCON qo'shish jarayoni</h5>
               </div>
               <span className="text-xs font-semibold text-red-700 bg-white border border-red-200 rounded-full px-3 py-1">
-                Ochish
+                <span className="group-open:hidden">Ochish</span>
+                <span className="hidden group-open:inline">Yopish</span>
               </span>
             </div>
           </summary>
@@ -938,7 +943,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                   <p className="font-semibold text-gray-800">Faqat <strong className="text-red-700">birinchi bayt</strong>ga qo'shiladi</p>
                 </div>
                 <div className="p-3 bg-gradient-to-r from-amber-100 to-red-100 rounded-lg border-l-4 border-amber-500">
-                  <p className="font-semibold text-gray-800">⊕ operatsiyasi orqali qo'shiladi</p>
+                  <p className="font-semibold text-gray-800">XOR (⊕) operatsiyasi orqali qo'shiladi</p>
                 </div>
               </div>
               
@@ -971,7 +976,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                 </div>
                 <div className="bg-gradient-to-r from-red-100 to-orange-100 p-3 rounded-lg border-l-4 border-red-500">
                   <p className="text-sm font-bold text-red-900 text-center">
-                    🎯 <strong>Joriy:</strong> RCON[{currentStep}] = {RCON[currentStep].toString(16).padStart(2, '0').toUpperCase()} (Round {currentStep} uchun)
+                    <strong>Joriy:</strong> RCON[{currentStep}] = {RCON[currentStep].toString(16).padStart(2, '0').toUpperCase()} (Raund {currentStep} uchun)
                   </p>
                 </div>
               </div>
@@ -1009,7 +1014,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
               {/* XOR operation */}
               <div className="mb-6 p-4 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl border-2 border-orange-300">
                 <div className="text-center mb-4">
-                  <div className="text-lg font-bold text-orange-700 mb-1">🔄 ⊕ operatsiyasi:</div>
+                  <div className="text-lg font-bold text-orange-700 mb-1">XOR (⊕) operatsiyasi:</div>
                   <div className="text-xs text-gray-600">Faqat birinchi baytga RCON qo'shiladi</div>
                 </div>
                 
@@ -1039,14 +1044,9 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                 
                 {/* Binary XOR */}
                 <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-5 rounded-xl border-2 border-gray-300 shadow-lg">
-                  <div className="text-center mb-4">
-                    <div className="text-base font-bold text-gray-800 mb-1">📊 Binary formatda ⊕:</div>
-                    <div className="text-xs text-gray-600">Har bir bit alohida ⊕ qilinadi</div>
-                  </div>
-                  
                   {/* Bit-by-bit explanation */}
                   <div className="mt-5 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border-2 border-blue-300">
-                    <div className="text-sm font-bold text-blue-800 mb-3 text-center">Bitlar bo‘yicha ⊕ amali (ustun ko‘rinishda):</div>
+                    <div className="text-sm font-bold text-blue-800 mb-3 text-center">Bitlar bo‘yicha XOR(⊕) amali</div>
                     <div className="space-y-1">
                       <div className="flex items-center justify-center gap-2">
                         <span className="w-16 text-right text-sm font-mono text-purple-700 font-semibold">S-box:</span>
@@ -1081,11 +1081,6 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                     </div>
                   </div>
                   
-                  <div className="mt-4 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
-                    <div className="text-xs font-bold text-yellow-900 text-center">
-                      <strong>Eslatma:</strong> Faqat birinchi baytga RCON qo'shiladi, qolgan 3 ta bayt o'zgarishsiz qoladi!
-                    </div>
-                  </div>
                 </div>
               </div>
               
@@ -1122,7 +1117,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
         </details>
 
         {/* Step 5: XOR with Previous Key */}
-        <details className="mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl shadow-lg border-2 border-green-300">
+        <details className="group mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl shadow-lg border-2 border-green-300">
           <summary className="cursor-pointer list-none">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -1132,7 +1127,8 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                 <h5 className="font-extrabold text-xl text-green-700">Yangi kalitning birinchi word'i yaratilishi</h5>
               </div>
               <span className="text-xs font-semibold text-green-700 bg-white border border-green-200 rounded-full px-3 py-1">
-                Ochish
+                <span className="group-open:hidden">Ochish</span>
+                <span className="hidden group-open:inline">Yopish</span>
               </span>
             </div>
           </summary>
@@ -1214,7 +1210,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                 <div className="inline-block w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg mb-3">
                   3
                 </div>
-                <h6 className="font-bold text-xl text-green-900">⊕ NATIJASI (YANGI WORD)</h6>
+                <h6 className="font-bold text-xl text-green-900">XOR NATIJASI (YANGI WORD)</h6>
                 <div className="text-xs text-gray-600 mt-2 font-semibold">Yangi kalitning birinchi word'i</div>
               </div>
               <div className="flex gap-2 justify-center mb-4">
@@ -1275,7 +1271,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
           
           {/* Detailed XOR operations */}
           <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-6 rounded-xl border-2 border-gray-400 shadow-lg">
-            <h6 className="font-extrabold text-xl text-gray-900 mb-5 text-center">HAR BIR BAYT UCHUN ⊕ OPERATSIYASI:</h6>
+            <h6 className="font-extrabold text-xl text-gray-900 mb-5 text-center">HAR BIR BAYT UCHUN XOR OPERATSIYASI:</h6>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
               {details.xorResult.map((resultByte, i) => {
@@ -1285,7 +1281,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                 return (
                   <div key={i} className="bg-white p-4 rounded-xl border-2 border-gray-300 shadow-md hover:shadow-lg transition-all">
                     <div className="text-center mb-3">
-                      <div className="text-base font-bold text-gray-800 mb-1">Bayt {i} ⊕:</div>
+                      <div className="text-base font-bold text-gray-800 mb-1">Bayt {i}</div>
                       <div className="inline-block px-2 py-1 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg">
                         <span className="text-xs font-mono font-semibold">
                           {formatByte(prevByte).toUpperCase()} ⊕ {formatByte(transByte).toUpperCase()} = <span className="text-green-700 font-bold">{formatByte(resultByte).toUpperCase()}</span>
@@ -1331,17 +1327,16 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
           {/* Remaining words generation */}
           <div className="mt-6 bg-gradient-to-r from-purple-50 via-pink-50 to-purple-100 p-6 rounded-xl border-2 border-purple-300 shadow-lg">
             <div className="flex items-center justify-center gap-3 mb-5">
-              <span className="text-2xl">🔄</span>
               <h6 className="font-extrabold text-xl text-purple-900">QOLGAN {remainingWords} TA WORD YARATILISHI</h6>
             </div>
             
             <div className="bg-white p-5 rounded-lg border-l-4 border-purple-500 mb-5">
               <div className="text-sm text-gray-800 mb-2">
                 <p className="font-semibold mb-2">
-                  📝 <strong className="text-purple-700">Eslatma:</strong>{' '}
+                  <strong className="text-purple-700">Eslatma:</strong>{' '}
                   {explanationWordsInCurrentKey === 8
                     ? `AES-256 da qolgan ${remainingWords} ta word yaratiladi, Word[4] da esa SubWord qoidasi ishlatiladi.`
-                    : `Birinchi word topilgandan keyin, qolgan ${remainingWords} ta word oddiy ⊕ orqali yaratiladi:`}
+                    : `Birinchi word topilgandan keyin, qolgan ${remainingWords} ta word oddiy XOR orqali yaratiladi:`}
                 </p>
                 <p className="font-mono bg-purple-50 p-3 rounded-lg border border-purple-200 text-center">
                   <strong className="text-purple-900">Formula:</strong>{' '}
@@ -1363,8 +1358,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
             {/* Visual matrix showing word generation */}
             <div className="mt-6 bg-gradient-to-br from-white via-purple-50 to-white p-6 rounded-xl border-2 border-purple-300 shadow-lg">
               <div className="flex items-center justify-center gap-3 mb-5">
-                <span className="text-2xl">📊</span>
-                <h6 className="font-extrabold text-xl text-purple-900">QOLGAN {remainingWords} TA WORD YARATILISHI (VIZUAL)</h6>
+                <h6 className="font-extrabold text-xl text-purple-900">QOLGAN {remainingWords} TA WORD YARATILISHI</h6>
               </div>
               
               {/* Step-by-step word generation */}
@@ -2100,11 +2094,6 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
 
       {/* Current Step Content - Modern Card */}
       <div className="bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl border-2 border-blue-100">
-        <div className="mb-6">
-          <h3 className="text-2xl font-extrabold mb-2 text-slate-800">{currentStepData.title}</h3>
-          <p className="text-gray-600 text-lg">{currentStepData.description}</p>
-        </div>
-
         {/* Key Matrices */}
         {currentStep !== steps.length - 1 && (
           <div className={`grid gap-8 mb-6 mx-auto ${currentStep === 0 ? 'justify-center' : 'grid-cols-1 lg:grid-cols-2'}`}>
@@ -2143,7 +2132,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
         )}
 
         {/* Explanation - Modern Design */}
-        {currentStep !== steps.length - 1 && (
+        {currentStep !== steps.length - 1 && hasStepExplanation && (
           <div className="mt-6 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg border-2 border-blue-200">
             <h4 className="font-bold text-xl mb-4 text-slate-800">📚 Batafsil tushuntirish:</h4>
             <p className="whitespace-pre-line text-base text-gray-700 leading-relaxed">{currentStepData.explanation}</p>
@@ -2162,7 +2151,7 @@ const KeyGenerationVisualizer: React.FC<KeyGenerationVisualizerProps> = ({
                     <strong className="text-pink-700">3. RCON qo'shish:</strong> <span className="font-mono text-gray-700">c₀ = b₀ ⊕ RCON[round], cᵢ = bᵢ</span> <span className="text-gray-600">(i {'>'} 0 uchun)</span>
                   </div>
                   <div className="p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border-l-4 border-green-500">
-                    <strong className="text-green-700">4. ⊕:</strong> <span className="font-mono text-gray-700">w₀ = oldingi_w₀ ⊕ c, wᵢ = oldingi_wᵢ ⊕ wᵢ₋₁</span> <span className="text-gray-600">(i {'>'} 0 uchun)</span>
+                    <strong className="text-green-700">4. XOR(⊕):</strong> <span className="font-mono text-gray-700">w₀ = oldingi_w₀ ⊕ c, wᵢ = oldingi_wᵢ ⊕ wᵢ₋₁</span> <span className="text-gray-600">(i {'>'} 0 uchun)</span>
                   </div>
                 </div>
               </div>

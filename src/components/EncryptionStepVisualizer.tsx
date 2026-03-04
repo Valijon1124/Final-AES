@@ -214,9 +214,17 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
         </div>
         
         {/* Detailed Binary XOR Operation */}
-        <div className="mt-8 w-full max-w-6xl">
-          <div className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-300 shadow-xl">
-            <h6 className="font-extrabold text-center text-blue-800 text-2xl mb-6">BINAR KO'RINISHDAGI XOR OPERATSIYASI</h6>
+        <details className="group mt-8 w-full max-w-6xl p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-300 shadow-xl">
+          <summary className="cursor-pointer list-none">
+            <div className="flex items-center justify-between gap-3">
+              <h6 className="font-extrabold text-blue-800 text-xl sm:text-2xl">BINAR KO'RINISHDAGI XOR OPERATSIYASI</h6>
+              <span className="text-xs font-semibold text-blue-700 bg-white border border-blue-200 rounded-full px-3 py-1">
+                <span className="group-open:hidden">Ochish</span>
+                <span className="hidden group-open:inline">Yopish</span>
+              </span>
+            </div>
+          </summary>
+          <div className="mt-6">
             
             {/* Detailed XOR Example for First Byte */}
             <div className="hidden mb-6 p-6 bg-white rounded-2xl border-2 border-blue-200 shadow-lg">
@@ -370,7 +378,7 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
               </div>
             </div>
           </div>
-        </div>
+        </details>
       </div>
     );
   };
@@ -396,9 +404,17 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
 
         {operationType === 'CTRXOR' && step.previousState && step.roundKey && (
           <div className="space-y-4">
-            <div>
-              <h6 className="font-bold text-xl text-blue-700 mb-4 block">Barcha 16 bayt uchun binar XOR:</h6>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <details className="group/ctr p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-300 shadow-xl">
+              <summary className="cursor-pointer list-none">
+                <div className="flex items-center justify-between gap-3">
+                  <h6 className="font-bold text-xl text-blue-700">Barcha 16 bayt uchun binar XOR:</h6>
+                  <span className="text-xs font-semibold text-blue-700 bg-white border border-blue-200 rounded-full px-3 py-1">
+                    <span className="group-open/ctr:hidden">Ochish</span>
+                    <span className="hidden group-open/ctr:inline">Yopish</span>
+                  </span>
+                </div>
+              </summary>
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {step.state.map((byte, i) => {
                   const plaintextByte = step.previousState ? step.previousState[i] : byte;
                   const counterByte = step.roundKey?.[i] || 0;
@@ -441,7 +457,7 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                   );
                 })}
               </div>
-            </div>
+            </details>
           </div>
         )}
         
@@ -809,12 +825,13 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
             )}
 
             {/* Enhanced MixColumns Operation Visualization */}
-            <details className="p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-300 mt-8 shadow-xl">
+            <details className="group/mix p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-300 mt-8 shadow-xl">
               <summary className="cursor-pointer list-none">
                 <div className="flex items-center justify-between gap-3">
                   <h6 className="font-extrabold text-blue-800 text-lg sm:text-xl">MixColumns operatsiyasi batafsil</h6>
                   <span className="text-xs font-semibold text-blue-700 bg-white border border-blue-200 rounded-full px-3 py-1">
-                    Ochish
+                    <span className="group-open/mix:hidden">Ochish</span>
+                    <span className="hidden group-open/mix:inline">Yopish</span>
                   </span>
                 </div>
               </summary>
@@ -876,12 +893,13 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
 
                     {/* Detailed calculation for first column */}
                     {col === 0 && step.previousState && (
-                      <details className="mt-6 p-4 sm:p-6 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-300 shadow-md">
+                      <details className="group/mixcol mt-6 p-4 sm:p-6 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-300 shadow-md">
                         <summary className="cursor-pointer list-none">
                           <div className="flex items-center justify-between gap-3">
                             <span className="text-lg font-bold text-yellow-800">Birinchi ustun uchun batafsil hisoblash</span>
                             <span className="text-xs font-semibold text-yellow-700 bg-white border border-yellow-300 rounded-full px-3 py-1">
-                              Ochish
+                              <span className="group-open/mixcol:hidden">Ochish</span>
+                              <span className="hidden group-open/mixcol:inline">Yopish</span>
                             </span>
                           </div>
                         </summary>
@@ -1249,12 +1267,13 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
                 )}
                 
                 {/* Enhanced XOR Operation Visualization */}
-                <details className="p-6 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl border-2 border-orange-300 mt-8 shadow-xl">
+                <details className="group p-6 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl border-2 border-orange-300 mt-8 shadow-xl">
                   <summary className="cursor-pointer list-none">
                     <div className="flex items-center justify-between gap-3">
                       <h6 className="font-extrabold text-orange-800 text-lg sm:text-xl">XOR operatsiyasi batafsil</h6>
                       <span className="text-xs font-semibold text-orange-700 bg-white border border-orange-200 rounded-full px-3 py-1">
-                        Ochish
+                        <span className="group-open:hidden">Ochish</span>
+                        <span className="hidden group-open:inline">Yopish</span>
                       </span>
                     </div>
                   </summary>
@@ -1441,6 +1460,7 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
   }
 
   const currentStepData = steps[currentStep];
+  const hasStepExplanation = Boolean(currentStepData.explanation?.trim());
   const isPlaintextStateStep =
     currentStepData.description.includes('Asl ochiq matn') ||
     currentStepData.description.includes('Counter qiymati') ||
@@ -1482,7 +1502,9 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
       {/* Current Step Description */}
       <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-lg border border-blue-200">
         <h4 className="font-bold text-xl mb-2 text-blue-900">{currentStepData.description}</h4>
-        <p className="text-sm text-slate-700">{currentStepData.explanation}</p>
+        {hasStepExplanation && (
+          <p className="text-sm text-slate-700">{currentStepData.explanation}</p>
+        )}
       </div>
 
       {/* State Matrix */}
@@ -1507,10 +1529,12 @@ const EncryptionStepVisualizer: React.FC<EncryptionStepVisualizerProps> = ({
       </div>
 
       {/* Explanation */}
-      <div className="mt-6 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-lg border border-blue-200">
-        <h4 className="font-bold text-xl mb-2 text-blue-900">Batafsil tushuntirish:</h4>
-        <p className="text-sm text-slate-700">{currentStepData.explanation}</p>
-      </div>
+      {hasStepExplanation && (
+        <div className="mt-6 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-lg border border-blue-200">
+          <h4 className="font-bold text-xl mb-2 text-blue-900">Batafsil tushuntirish:</h4>
+          <p className="text-sm text-slate-700">{currentStepData.explanation}</p>
+        </div>
+      )}
     </div>
   );
 };
